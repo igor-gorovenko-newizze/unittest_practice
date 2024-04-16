@@ -33,8 +33,13 @@
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->getPriceInEurAttribute() }}</td>
                                         @if(auth()->user()->is_admin)
-                                            <td>
-                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-dark">Edit</a>
+                                            <td class="flex">
+                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-dark mr-2">Edit</a>
+                                                <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button onclick="return confirm('Are you sure?')" type="submit" class="btn btn-danger">Delete</button>
+                                                </form>
                                             </td>
                                         @endif
                                     </tr>
