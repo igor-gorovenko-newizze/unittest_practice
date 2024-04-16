@@ -25,7 +25,7 @@
                                 </thead>
                                 <tbody>
                                 @foreach ($products as $product)
-                                    <tr>
+                                    <tr style="vertical-align: middle">
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->getPriceInEurAttribute() }}</td>
