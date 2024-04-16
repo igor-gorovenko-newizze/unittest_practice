@@ -25,7 +25,7 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertStatus(302);
-        $response->assertRedirect('dashboard');
+        $response->assertRedirect('products');
     }
 
     public function test_unauthenticated_user_cannot_access_product()
