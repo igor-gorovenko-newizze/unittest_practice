@@ -19,7 +19,8 @@
                                 <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Price</th>
+                                    <th>Price USD</th>
+                                    <th>Price EUR</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -27,6 +28,7 @@
                                     <tr>
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>
+                                        <td>{{ $product->getPriceInEurAttribute() }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>
