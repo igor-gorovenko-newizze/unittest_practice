@@ -64,7 +64,7 @@ class ProductsTest extends TestCase
         $response = $this->actingAs($this->admin)->get('/products');
 
         $response->assertStatus(200);
-        $response->assertSee('CREATE NEW PRODUCT');
+        $response->assertSee('Create new product');
     }
 
     public function test_non_admin_cannot_see_products_create_button ()
@@ -72,7 +72,7 @@ class ProductsTest extends TestCase
         $response = $this->actingAs($this->user)->get('/products');
 
         $response->assertStatus(200);
-        $response->assertDontSee('CREATE NEW PRODUCT');
+        $response->assertDontSee('Create new product');
     }
 
     public function test_admin_can_access_product_create_page ()
@@ -106,6 +106,31 @@ class ProductsTest extends TestCase
         $lastProduct = Product::latest()->first();
         $this->assertEquals($product['title'], $lastProduct->title);
         $this->assertEquals($product['price'], $lastProduct->price);
+    }
+
+    public function test_product_edit_contains_correct_value()
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->actingAs($this->admin)->get("/products/{$product->id}/edit");
+
+        $response->assertStatus(200);
+        $response->assertSee('value="' . $product->title . '"', false);
+        $response->assertSee('value="' . $product->price . '"', false);
+        $response->assertViewHas('product', $product);
+    }
+
+    public function test_product_update_validation_error_redirects_back_to_form()
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->actingAs($this->admin)->put("/products/{$product->id}", [
+            'title' => '',
+            'price' => ''
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertInvalid(['title', 'price']);
     }
 
     private function createUser(bool $isAdmin = false): User

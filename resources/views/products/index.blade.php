@@ -10,23 +10,41 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if (auth()->user()->is_admin)
-
-                            <a href="{{ route('products.create') }}">
-                                CREATE NEW PRODUCT
-                            </a>
-
+                        <a href="{{ route('products.create') }}" class="btn btn-dark">Create new product</a>
                     @endif
 
-                    <ul>
+                    <div class="mt-4">
                         @if ($products->count() > 0)
-                            @foreach ($products as $product)
-                                <li>{{ $product->title }} - {{ $product->price }}</li>
-                            @endforeach
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Price USD</th>
+                                    <th>Price EUR</th>
+                                    @if(auth()->user()->is_admin)
+                                        <th>Actions</th>
+                                    @endif
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach ($products as $product)
+                                    <tr style="vertical-align: middle">
+                                        <td>{{ $product->title }}</td>
+                                        <td>{{ $product->price }}</td>
+                                        <td>{{ $product->getPriceInEurAttribute() }}</td>
+                                        @if(auth()->user()->is_admin)
+                                            <td>
+                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-dark">Edit</a>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         @else
                             <p>No products found</p>
                         @endif
-                    </ul>
-
+                    </div>
                 </div>
             </div>
         </div>

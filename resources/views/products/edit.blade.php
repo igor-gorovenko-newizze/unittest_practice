@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Create Product
+            Edit Product
         </h2>
     </x-slot>
 
@@ -13,19 +13,20 @@
                         <a href="{{ route('products.index') }}">Back to products page</a>
                     </div>
 
-                    <form method="POST" action="{{ route('products.store') }}">
+                    <form method="POST" action="{{ route('products.update', $product) }}">
                         @csrf
+                        @method('PUT')
 
                         <div class="mb-4">
                             <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
 
-                            <input id="title" class="block mt-1 w-full" type="text" name="title" required autofocus />
+                            <input id="title" class="block mt-1 w-full" type="text" name="title" value="{{ $product->title }}" required autofocus />
                         </div>
 
                         <div class="mb-4">
                             <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
 
-                            <input id="price" class="block mt-1 w-full" type="number" name="price" required />
+                            <input id="price" class="block mt-1 w-full" type="number" name="price" value="{{ $product->price }}"required />
                         </div>
 
                         <div class="flex items-center mt-4">
