@@ -25,4 +25,20 @@ class ProductController extends Controller
 
         return redirect()->route('products.index');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param \App\Models\Product $product
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
+    public function update()
+    {
+        //
+    }
 }

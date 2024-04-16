@@ -21,6 +21,9 @@
                                     <th>Title</th>
                                     <th>Price USD</th>
                                     <th>Price EUR</th>
+                                    @if(auth()->user()->is_admin)
+                                        <th>Actions</th>
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -29,6 +32,11 @@
                                         <td>{{ $product->title }}</td>
                                         <td>{{ $product->price }}</td>
                                         <td>{{ $product->getPriceInEurAttribute() }}</td>
+                                        @if(auth()->user()->is_admin)
+                                            <td>
+                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-dark">Edit</a>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                                 </tbody>
